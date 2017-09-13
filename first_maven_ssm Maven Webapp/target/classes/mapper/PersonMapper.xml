@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yueying.dao.IPersonDao">
+<!--设置domain类和数据库中表的字段一一对应，注意数据库字段和domain类中的字段名称不致，此处一定要！-->
+    <resultMap id="BaseResultMap" type="com.yueying.pojo.Person">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="CHAR" />
+        <result column="age" property="age" jdbcType="INTEGER" />
+        <result column="sex" property="sex" jdbcType="CHAR" />
+        <result column="income" property="income" jdbcType="FLOAT" />
+    </resultMap>
+    <!-- person列表 -->
+    <select id="selectAllPerson" resultMap="BaseResultMap">
+        SELECT * FROM employee
+    </select>
+    
+    
+    <insert id="addPerson" useGeneratedKeys="true">
+    	insert into employee(id,name, age,sex,income) values(null,#{name}, #{age},#{sex},#{income})
+    </insert>
+    
+    <delete id="deletePersonById">
+    	delete from employee where id = #{id}
+    </delete>
+    
+    <select id="selectPersonById" resultMap="BaseResultMap" parameterType="int">
+    	select * from employee where id = #{id}
+    </select>
+    
+    <update id="updatePerson">
+    	update employee
+    	<set>
+    		<if test="name!=null">
+    			name = #{name},
+    		</if>
+    		<if test="age!=null">
+    			age = #{age},
+    		</if>
+    		<if test="sex!=null">
+    			sex = #{sex},
+    		</if>
+    		<if test="income!=null">
+    			income = #{income},
+    		</if>
+    	</set>
+    	where id=#{id}
+    </update>
+    
+    
+    
+</mapper>
