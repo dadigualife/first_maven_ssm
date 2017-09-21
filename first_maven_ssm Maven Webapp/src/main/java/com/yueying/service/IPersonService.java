@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.xml.registry.infomodel.PersonName;
 
+import com.github.pagehelper.PageInfo;
 import com.yueying.pojo.Person;
 
 public interface IPersonService {
@@ -17,5 +18,8 @@ public interface IPersonService {
 	public Person selectPersonById(int id);
 	
 	public int updatePerson(Person person);
+	
+	
+	public PageInfo<Person> queryByPage(Integer pageNo,Integer pageSize);
 
 }

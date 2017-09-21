@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.github.pagehelper.PageHelper;
 import com.yueying.pojo.Person;
 import com.yueying.pojo.User;
 import com.yueying.service.IPersonService;
@@ -21,17 +22,17 @@ public class PersonController {
 	@RequestMapping("/personlist")
 	public String personList(HttpServletRequest request) {
 		
-		
-//		int userId = Integer.parseInt(request.getParameter("id"));
-//		User user = this.userService.selectUserById(userId);
-//		model.addAttribute("user", user);
 		List<Person> personList = personService.selectAllPerson();
 		request.setAttribute("personlist", personList);
-//		model.addAttribute("personlist", personList);
 		User u = (User) request.getSession().getAttribute("user");
 		request.setAttribute("username", u.getUserName());
-//		model.addAttribute("username", u.getUserName());
-		
+		String delete = request.getParameter("delete");
+		if(delete == null||delete.equals("")){
+			
+		}else{
+			request.setAttribute("delete", delete);
+		}
+       
 		
 		return "person/person_list";
 	}
@@ -79,13 +80,13 @@ public class PersonController {
 		int t = personService.deletePerson(id);
 		
 		if(t == 1){
-			
+			return "forward:personlist?delete='success'";
 		}else{
-			
+			return "forward:personlist?delete='error'";
 		}
 		
 		
-		return "redirect:personlist";
+		
 	}
 	
 	

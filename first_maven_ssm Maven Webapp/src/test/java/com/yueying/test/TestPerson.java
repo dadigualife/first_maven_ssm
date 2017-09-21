@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.github.pagehelper.PageInfo;
 import com.yueying.pojo.Person;
 import com.yueying.pojo.User;
 import com.yueying.service.IPersonService;
@@ -17,14 +18,14 @@ import com.yueying.service.IUserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 // 表示继承了SpringJUnit4ClassRunner类
-@ContextConfiguration(locations = { "classpath:spring-mybatis.xml" })
+@ContextConfiguration(locations = { "classpath:application.xml" })
 public class TestPerson {
 
 	private static Logger logger = Logger.getLogger(TestPerson.class);
 
 	@Resource
 	private IPersonService personService = null;
-
+/*
 	@Test
 	public void test1() {
 		for(int i = 0 ; i < 50 ; i ++){
@@ -42,5 +43,12 @@ public class TestPerson {
 			
 		}
 	}
+	*/
+	
+	@Test  
+    public void queryByPageTest(){  
+        PageInfo<Person> page =  personService.queryByPage(1, 10);
+        System.out.println(page);
+    }
 
 }
